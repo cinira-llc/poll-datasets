@@ -4,6 +4,12 @@
   "description": "AWS Lambda function that polls various external sources for dataset updates.",
   "main": "index.js",
   "scripts": {
+    "build": "tsc -p ./tsconfig.json && tsc -p ./tsconfig-cjs.json && tsc -p ./tsconfig-types.json",
+    "clean": "rm -rf ./build ./dist",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint ./src",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
     "test": "jest"
   },
   "repository": {
@@ -15,5 +21,40 @@
   "bugs": {
     "url": "https://github.com/cinira-llc/poll-datasets/issues"
   },
-  "homepage": "https://github.com/cinira-llc/poll-datasets#readme"
+  "homepage": "https://github.com/cinira-llc/poll-datasets#readme",
+  "devDependencies": {
+    "@types/jest": "^29",
+    "@typescript-eslint/eslint-plugin": "^6",
+    "@typescript-eslint/parser": "^6",
+    "eslint": "^8",
+    "eslint-config-prettier": "^9",
+    "jest": "^29",
+    "jest-junit": "^16",
+    "prettier": "^3",
+    "semantic-release": "^22",
+    "ts-jest": "^29",
+    "typescript": "^5"
+  },
+  "peerDependencies": {
+    "aws-sdk": "^2"
+  },
+  "release": {
+    "plugins": [
+      "@semantic-release/github",
+      "@semantic-release/npm"
+    ]
+  },
+  "types": "./dist/esm/index.d.ts",
+  "jest": {
+    "preset": "ts-jest",
+    "reporters": [
+      [
+        "jest-junit",
+        {
+          "outputDirectory": "./build/report",
+          "outputName": "test-results.xml"
+        }
+      ]
+    ]
+  }
 }
