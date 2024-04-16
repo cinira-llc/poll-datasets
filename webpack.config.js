@@ -3,6 +3,9 @@ const path = require("path");
 module.exports = {
     // devtool: "source-map",
     entry: "./src/index.ts",
+    externals: [
+        "aws-sdk"
+    ],
     mode: "production",
     module: {
         rules: [
@@ -14,7 +17,7 @@ module.exports = {
         ],
     },
     resolve: {
-        extensions: [".ts"],
+        extensions: [".js", ".ts"],
     },
     output: {
         filename: "index.js",
