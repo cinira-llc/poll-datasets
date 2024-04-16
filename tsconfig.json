@@ -1,9 +1,21 @@
 {
-  "extends": "./tsconfig-base.json",
   "compilerOptions": {
-    "declaration": true,
-    "module": "esnext",
-    "outDir": "./dist/esm",
-    "target": "esnext"
-  }
+    "allowSyntheticDefaultImports": true,
+    "module": "es6",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "sourceMap": true,
+    "strict": true,
+    "target": "es5"
+  },
+  "exclude": [
+    "./node_modules",
+    "./dist",
+    "./__tests__"
+  ],
+  "include": [
+    "./src"
+  ]
 }
