@@ -1,15 +1,15 @@
 {
   "name": "poll-datasets",
-  "version": "1.0.0",
   "description": "AWS Lambda function that polls various external sources for dataset updates.",
-  "main": "index.js",
   "scripts": {
     "build": "webpack",
     "clean": "rm -rf ./build ./dist",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint ./src",
-    "test": "jest",
-    "dist": "npm run clean && npm run build && zip-build ./build/webpack ./dist"
+    "pack": "npm run prepare && zip-build -t '%NAME%.%EXT%' ./build/webpack ./dist",
+    "prepare": "npm run clean && npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -48,8 +48,17 @@
   },
   "release": {
     "plugins": [
-      "@semantic-release/github",
-      "@semantic-release/npm"
+      [
+        "@semantic-release/github",
+        {
+          "assets": [
+            {
+              "label": "Bundle for deployment to AWS Lambda",
+              "path": "./dist/poll-datasets.zip"
+            }
+          ]
+        }
+      ]
     ]
   },
   "jest": {
