@@ -6,7 +6,7 @@ const s3 = new S3Client();
 export const handler = async (event: object) => {
     const response = await s3.send(new ListObjectsCommand({
         Bucket: "cinira",
-        Prefix: "faa-cifp/CIFP_"
+        Prefix: "datasets/faa-cifp/CIFP_"
     }));
     const keys = _.transform(response.Contents || [], (contents, {Key}) => {
         contents.push(Key || "(unknown)");
