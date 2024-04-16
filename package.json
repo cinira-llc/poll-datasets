@@ -6,8 +6,8 @@
     "clean": "rm -rf ./build ./dist",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint ./src",
-    "pack": "npm run prepare && zip-build -t '%NAME%.%EXT%' ./build/webpack ./dist",
-    "prepare": "npm run clean && npm run build",
+    "pack": "zip-build -t '%NAME%.%EXT%' ./build/webpack ./dist",
+    "prepare": "npm run clean && npm run build && npm run pack",
     "prepublishOnly": "npm test && npm run lint",
     "test": "jest"
   },
