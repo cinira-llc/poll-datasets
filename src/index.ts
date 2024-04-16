@@ -1,15 +1,24 @@
+import {EventBridgeEvent} from "aws-lambda";
 import {S3Client, ListObjectsCommand} from "@aws-sdk/client-s3";
 import _ from "lodash";
 
 const s3 = new S3Client();
 
-export const handler = async (event: object) => {
+interface SampleEvent {
+    key: string;
+}
+
+export const handler = async (event: EventBridgeEvent<"Scheduled Event", SampleEvent>) => {
     const response = await s3.send(new ListObjectsCommand({
         Bucket: "cinira",
-        Prefix: "datasets/faa-cifp/CIFP_"
+        Prefix: "datasets/"
     }));
     const keys = _.transform(response.Contents || [], (contents, {Key}) => {
         contents.push(Key || "(unknown)");
     }, [] as string[]);
-    return JSON.stringify({event, keys});
+    event.detail
+    return JSON.stringify({
+        event, keys,
+        detail: event.detail
+    });
 }

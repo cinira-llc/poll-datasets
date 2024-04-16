@@ -6,9 +6,9 @@
     "clean": "rm -rf ./build ./dist",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint ./src",
-    "pack": "zip-build -t '%NAME%.%EXT%' ./build/webpack ./dist",
-    "prepare": "npm run clean && npm run build && npm run pack",
-    "prepublishOnly": "npm test && npm run lint",
+    "pack": "zip-build --override -t '%NAME%.%EXT%' ./build/webpack ./dist",
+    "prepare": "npm run clean && npm run build",
+    "prepublishOnly": "npm test && npm run lint && npm run pack",
     "test": "jest"
   },
   "repository": {
@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@aws-sdk/types": "^3",
+    "@types/aws-lambda": "^8",
     "@types/jest": "^29",
     "@types/lodash": "^4",
     "@typescript-eslint/eslint-plugin": "^6",
